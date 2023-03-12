@@ -1,14 +1,15 @@
+
 function generateHTML(teamMembers) {
     const cards = teamMembers.map(member => {
       const { name, role, id, email } = member.getInfo();
       let specialInfo = '';
   
       if (member instanceof Manager) {
-        specialInfo = `Office Number: ${member.officeNumber}`;
+        specialInfo = `Office Number: ${member.getofficeNumber()}`;
       } else if (member instanceof Engineer) {
-        specialInfo = `GitHub: <a href="https://github.com/${member.github}" target="_blank">${member.github}</a>`;
+        specialInfo = `GitHub: <a href="https://github.com/${member.getGithub()}" target="_blank">${member.getGithub()}</a>`;
       } else if (member instanceof Intern) {
-        specialInfo = `School: ${member.school}`;
+        specialInfo = `School: ${member.getSchool()}`;
       }
   
       return `

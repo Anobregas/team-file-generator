@@ -28,7 +28,7 @@ class Employee {
   getRole() {
     return 'Employee';
   }
-
+  /*
   getHtml() {
     return `<div class="card">
               <h2>${this.name}</h2>
@@ -38,7 +38,7 @@ class Employee {
                 <li>Email: <a href="mailto:${this.email}">${this.email}</a></li>
               </ul>
             </div>`;
-  }
+  }*/
 }
 
 
@@ -52,10 +52,10 @@ class Manager extends Employee {
     return 'Manager';
   }
 
-  getOfficeNumber(){
+  getOfficeNumber() {
     return 'officeNumber';
   }
-  getHtml() {
+  /*getHtml() {
     return `<div class="card">
               <h2>${this.name}</h2>
               <p>${this.getRole()}</p>
@@ -65,13 +65,14 @@ class Manager extends Employee {
                 <li>Office Number: ${this.officeNumber}</li>
               </ul>
             </div>`;
-  }
+  }*/
 }
+/*
 const manager = new Manager()
 manager.getRole()
 manager.getOfficeNumber()
 manager.getHtml()
-
+*/
 
 class Engineer extends Employee {
   constructor(name, id, email, github) {
@@ -86,7 +87,7 @@ class Engineer extends Employee {
   getGithub() {
     return this.github;
   }
-
+  /*
   getHtml() {
     return `<div class="card">
               <h2>${this.name}</h2>
@@ -97,16 +98,16 @@ class Engineer extends Employee {
                 <li>GitHub: <a href="https://github.com/${this.github}" target="_blank">${this.github}</a></li>
               </ul>
             </div>`;
-  }
+  }*/
 }
-const engineer = new Engineer ()
+/*const engineer = new Engineer ()
 engineer.getRole()
 engineer.getGithub()
 engineer.getHtml()
 //engineer.getname()
 //engineer.getId()
 //engineer.getEmail()
-
+*/
 class Intern extends Employee {
   constructor(name, id, email, school) {
     super(name, id, email);
@@ -120,7 +121,7 @@ class Intern extends Employee {
   getSchool() {
     return this.school;
   }
-
+  /*
   getHtml() {
     return `<div class="card">
               <h2>${this.name}</h2>
@@ -131,8 +132,9 @@ class Intern extends Employee {
                 <li>School: ${this.school}</li>
               </ul>
             </div>`;
-  }
+  }*/
 }
+/*
 const intern = new Intern()
 intern.getRole()
 intern.getSchool()
@@ -141,46 +143,48 @@ intern.getHtml()
 //intern.getId()
 //intern.getEmail()
 // Define an array to hold the team members
+*/
 const teamMembers = [];
 
 // Define the questions to prompt the user for team member
 
 function promptManager() {
   console.log('Please enter the following information for the team manager:');
-  inquirer
-      .prompt([
-          {
-              type: 'input',
-              message: 'Name:',
-              name: 'name',
-          },
-          {
-              type: 'input',
-              message: 'Employee ID:',
-              name: 'id',
-          },
-          {
-              type: 'input',
-              message: 'Email address:',
-              name: 'email',
-          },
-          {
-              type: 'input',
-              message: 'Office number:',
-              name: 'officeNumber',
-          },
-      ])
-      .then((answers) => {
-          const manager = {
-              name: answers.name,
-              id: answers.id,
-              email: answers.email,
-              officeNumber: answers.officeNumber,
-              role: 'Manager',
-          };
-          teamMembers.push(manager);
-          showMenu();
-      });
+  const managerObject =inquirer.prompt([
+      {
+        type: 'input',
+        message: 'Name:',
+        name: 'name',
+      },
+      {
+        type: 'input',
+        message: 'Employee ID:',
+        name: 'id',
+      },
+      {
+        type: 'input',
+        message: 'Email address:',
+        name: 'email',
+      },
+      {
+        type: 'input',
+        message: 'Office number:',
+        name: 'officeNumber',
+      },
+    ])
+    .then((answers) => {
+      /*const manager = {
+          name: answers.name,
+          id: answers.id,
+          email: answers.email,
+          officeNumber: answers.officeNumber,
+          role: 'Manager',
+      };*/
+      const {name, id, email, officeNumber} = managerObject;
+      const manager = new Manager(name, id, email, officeNumber)
+      teamMembers.push(manager);
+      showMenu();
+    });
 }
 
 // Prompt user to select between adding an engineer or intern, or finishing the team
@@ -188,131 +192,137 @@ function showMenu() {
   console.log('');
   console.log('What would you like to do next?');
   inquirer
-      .prompt([
-          {
-              type: 'list',
-              message: 'Please select an option:',
-              name: 'menu',
-              choices: [
-                  'Add Engineer',
-                  'Add Intern',
-                  'Finish Building Team',
-              ],
-          },
-      ])
-      .then((answers) => {
-          switch (answers.menu) {
-              case 'Add Engineer':
-                  promptEngineer();
-                  break;
-              case 'Add Intern':
-                  promptIntern();
-                  break;
-              case 'Finish Building Team':
-                  generateHTML();
-                  break;
-              default:
-                  break;
-          }
-      });
+    .prompt([
+      {
+        type: 'list',
+        message: 'Please select an option:',
+        name: 'menu',
+        choices: [
+          'Add Engineer',
+          'Add Intern',
+          'Finish Building Team',
+        ],
+      },
+    ])
+    .then((answers) => {
+      switch (answers.menu) {
+        case 'Add Engineer':
+          promptEngineer();
+          break;
+        case 'Add Intern':
+          promptIntern();
+          break;
+        case 'Finish Building Team':
+          generateHTML();
+          break;
+        default:
+          break;
+      }
+    });
 }
 
 // Prompt user for engineer info
 function promptEngineer() {
   console.log('Please enter the following information for the engineer:');
-  inquirer
-      .prompt([
-          {
-              type: 'input',
-              message: 'Name:',
-              name: 'name',
-          },
-          {
-              type: 'input',
-              message: 'Employee ID:',
-              name: 'id',
-          },
-          {
-              type: 'input',
-              message: 'Email address:',
-              name: 'email',
-          },
-          {
-              type: 'input',
-              message: 'GitHub username:',
-              name: 'github',
-          },
-      ])
-      .then((answers) => {
-          const engineer = {
-              name: answers.name,
-              id: answers.id,
-              email: answers.email,
-              github: answers.github,
-              role: 'Engineer',
-          };
-          teamMembers.push(engineer);
-          showMenu();
-      });
+  const engineerObject = inquirer.prompt([
+      {
+        type: 'input',
+        message: 'Name:',
+        name: 'name',
+      },
+      {
+        type: 'input',
+        message: 'Employee ID:',
+        name: 'id',
+      },
+      {
+        type: 'input',
+        message: 'Email address:',
+        name: 'email',
+      },
+      {
+        type: 'input',
+        message: 'GitHub username:',
+        name: 'github',
+      },
+    ])
+    .then((answers) => {
+      /*const engineer = {
+        name: answers.name,
+        id: answers.id,
+        email: answers.email,
+        github: answers.github,
+        role: 'Engineer',
+      };*/
+      const {name, id, email, officeNumber} = engineerObject;
+      const engineer = new Engineer(name, id, email, officeNumber)
+      teamMembers.push(engineer);
+      showMenu();
+    });
 }
 
 // Prompt user for intern info
 function promptIntern() {
   console.log('Please enter the following information for the intern:');
-  inquirer
-      .prompt([
-          {
-              type: 'input',
-              message: 'Name:',
-              name: 'name',
-          },
-          {
-              type: 'input',
-              message: 'Employee ID:',
-              name: 'id',
-          },
-          {
-              type: 'input',
-              message: 'Email address:',
-              name: 'email',
-          },
-          {
-              type: 'input',
-              message: 'School:',
-              name: 'school',
-          },
-      ])
-      .then((answers) => {
-          const intern = {
-              name: answers.name,
-              id: answers.id,
-              email: answers.email,
-              github: answers.github,
-              role: 'intern',
-          };
-          teamMembers.push(intern);
-          showMenu();
-      });
+  const internObject = inquirer.prompt([
+      {
+        type: 'input',
+        message: 'Name:',
+        name: 'name',
+      },
+      {
+        type: 'input',
+        message: 'Employee ID:',
+        name: 'id',
+      },
+      {
+        type: 'input',
+        message: 'Email address:',
+        name: 'email',
+      },
+      {
+        type: 'input',
+        message: 'School:',
+        name: 'school',
+      },
+    ])
+  .then((answers) => {
+      /*const intern = {
+          name: answers.name,
+          id: answers.id,
+          email: answers.email,
+          github: answers.github,
+          role: 'intern',
+      };*/
+
+    const {name, id, email, officeNumber} = internObject;
+      const intern = new Intern(name, id, email, officeNumber)
+      teamMembers.push(intern);
+      showMenu();
+  });
 }
 //promptManager()
 
-function writeToFile(file, data) {
-  return fs.writeFileSync((process.cwd(), file), data);
-}
-
-//function generateTeamRoster(teamMembers) {
- // const source = fs.readFileSync('./templates/teamRoster.hbs', 'utf8');
-  //const template = handlebars.compile(source);
- // const html = template({ teamMembers: teamMembers });
- // fs.writeFileSync('./output/teamRoster.html', html);
+//function writeToFile(file, data) {
+// return fs.writeFileSync((process.cwd(), file), data);
 //}
 
-function init(responses) {
-    //then((responses) => {
-    writeToFile('team.html', generateHTML({ ...responses }));
+//function generateTeamRoster(teamMembers) {
+// const source = fs.readFileSync('./templates/teamRoster.hbs', 'utf8');
+//const template = handlebars.compile(source);
+// const html = template({ teamMembers: teamMembers });
+// fs.writeFileSync('./output/teamRoster.html', html);
+//}
+
+//function init(responses) {
+//then((responses) => {
+// writeToFile('team.html', generateHTML({ ...responses }));
 //});
+//}
+function getInfo() {
+  promptManager()
 }
-promptManager()
+getInfo()
 
 
 //cleargenerateTeamRoster()*/
