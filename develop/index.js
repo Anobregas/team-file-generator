@@ -191,8 +191,7 @@ function promptManager() {
 function showMenu() {
   console.log('');
   console.log('What would you like to do next?');
-  inquirer
-    .prompt([
+  inquirer.prompt([
       {
         type: 'list',
         message: 'Please select an option:',
@@ -295,7 +294,7 @@ function promptIntern() {
           role: 'intern',
       };*/
 
-    const {name, id, email, officeNumber} = internObject;
+      const {name, id, email, officeNumber} = internObject;
       const intern = new Intern(name, id, email, officeNumber)
       teamMembers.push(intern);
       showMenu();
@@ -319,10 +318,26 @@ function promptIntern() {
 // writeToFile('team.html', generateHTML({ ...responses }));
 //});
 //}
-function getInfo() {
-  promptManager()
+async function getInfo() {
+  await promptManager()
+}
+
+
+function finish() {
+  const gerneratePage = generateHTML(teamMembers)
+  const fileName = 'team.html'
+
+  writeFile(fileName, gerneratePage)
+}
+
+function writeFile(fileName, data) {
+  fs.writeFile(fileName, data, (err) => {
+    if(err){
+    console.log(err)
+    }else{
+      console("complete")
+    }
+  })
 }
 getInfo()
-
-
 //cleargenerateTeamRoster()*/

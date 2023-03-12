@@ -1,18 +1,20 @@
 
-function generateHTML(teamMembers) {
+function generateHTML() {
+    const teamMembers = []
     const cards = teamMembers.map(member => {
-      const { name, role, id, email } = member.getInfo();
-      let specialInfo = '';
-  
-      if (member instanceof Manager) {
-        specialInfo = `Office Number: ${member.getofficeNumber()}`;
-      } else if (member instanceof Engineer) {
-        specialInfo = `GitHub: <a href="https://github.com/${member.getGithub()}" target="_blank">${member.getGithub()}</a>`;
-      } else if (member instanceof Intern) {
-        specialInfo = `School: ${member.getSchool()}`;
-      }
-  
-      return `
+        const { name, role, id, email } = member;
+
+        let specialInfo = '';
+
+        if (member instanceof Manager) {
+            specialInfo = `Office Number: ${member.getofficeNumber()}`;
+        } else if (member instanceof Engineer) {
+            specialInfo = `GitHub: <a href="https://github.com/${member.getGithub()}" target="_blank">${member.getGithub()}</a>`;
+        } else if (member instanceof Intern) {
+            specialInfo = `School: ${member.getSchool()}`;
+        }
+
+        return `
         <div class="card">
           <div class="card-header">
             <h2>${name}</h2>
@@ -26,7 +28,7 @@ function generateHTML(teamMembers) {
         </div>
       `;
     });
-  
+
     return `
       <!DOCTYPE html>
       <html>
@@ -46,5 +48,5 @@ function generateHTML(teamMembers) {
         </body>
       </html>
     `;
-  }
-  module.exports = generateHTML
+}
+module.exports = generateHTML
