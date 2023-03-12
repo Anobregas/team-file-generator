@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path')
 const handlebars = require('handlebars')
+const generateHTML = require("./generateHTML")
 
 // Define a class for each team member
 class Employee {
@@ -66,12 +67,11 @@ class Manager extends Employee {
             </div>`;
   }
 }
-Manager.getRole()
-Manager.getOfficeNumber()
-Manager.getHtml()
-Manager.getname()
-Manager.getId()
-Manager.getEmail()
+const manager = new Manager()
+manager.getRole()
+manager.getOfficeNumber()
+manager.getHtml()
+
 
 class Engineer extends Employee {
   constructor(name, id, email, github) {
@@ -99,12 +99,13 @@ class Engineer extends Employee {
             </div>`;
   }
 }
-Engineer.getRole()
-Engineer.getGithub()
-Engineer.getHtml()
-Engineer.getname()
-Engineer.getId()
-Engineer.getEmail()
+const engineer = new Engineer ()
+engineer.getRole()
+engineer.getGithub()
+engineer.getHtml()
+//engineer.getname()
+//engineer.getId()
+//engineer.getEmail()
 
 class Intern extends Employee {
   constructor(name, id, email, school) {
@@ -132,160 +133,168 @@ class Intern extends Employee {
             </div>`;
   }
 }
-
-Intern.getRole()
-Intern.getSchool()
-Intern.getHtml()
-Intern.getname()
-Intern.getId()
-Intern.getEmail()
+const intern = new Intern()
+intern.getRole()
+intern.getSchool()
+intern.getHtml()
+//intern.getname()
+//intern.getId()
+//intern.getEmail()
 // Define an array to hold the team members
-const team = [];
+const teamMembers = [];
 
 // Define the questions to prompt the user for team member
 
-const managerQuestions = [
-    {
-      type: 'input',
-      name: 'name',
-      message: "What is the team manager's name?",
-      validate: input => {
-        if (input.trim().length === 0) {
-          return 'Please enter a name.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'id',
-      message: "What is the team manager's employee ID?",
-      validate: input => {
-        if (!Number.isInteger(Number(input)) || input.trim().length === 0) {
-          return 'Please enter a valid employee ID.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'email',
-      message: "What is the team manager's email address?",
-      validate: input => {
-        if (!/\S+@\S+\.\S+/.test(input)) {
-          return 'Please enter a valid email address.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'officeNumber',
-      message: "What is the team manager's office number?",
-      validate: input => {
-        if (!Number.isInteger(Number(input)) || input.trim().length === 0) {
-          return 'Please enter a valid office number.';
-        }
-        return true;
-      }
-    }
-  ];
-  
-const engineerQuestions = [
-    {
-      type: 'input',
-      name: 'name',
-      message: "What is the engineer's name?",
-      validate: input => {
-        if (input.trim().length === 0) {
-          return 'Please enter a name.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'id',
-      message: "What is the engineer's employee ID?",
-      validate: input => {
-        if (!Number.isInteger(Number(input)) || input.trim().length === 0) {
-          return 'Please enter a valid employee ID.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'email',
-      message: "What is the engineer's email address?",
-      validate: input => {
-        if (!/\S+@\S+\.\S+/.test(input)) {
-          return 'Please enter a valid email address.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'github',
-      message: "What is the engineer's GitHub username?",
-      validate: input => {
-        if (input.trim().length === 0) {
-          return 'Please enter a GitHub username.';
-        }
-        return true;
-      }
-    }
-  ];
-  
-const internQuestions = [
-    {
-      type: 'input',
-      name: 'name',
-      message: "What is the intern's name?",
-      validate: input => {
-        if (input.trim().length === 0) {
-          return 'Please enter a name.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'id',
-      message: "What is the intern's employee ID?",
-      validate: input => {
-        if (!Number.isInteger(Number(input)) || input.trim().length === 0) {
-          return 'Please enter a valid employee ID.';
-        }
-        return true;
-      }
-    },
-    {
-      type: 'input',
-      name: 'email',
-      message: "What is the intern's email address?",
-      validate: input => {
-        if (!/\S+@\S+\.\S+/.test(input)) {
-          return 'Please enter a valid'
-        }
-        return true
-        }
-    },
-    {
-      type: 'input',
-      name: 'school',
-      message: "What school did the intern attend",
-      validate: input => {
-        if (input.trim().length === 0) {
-          return 'Please enter a school name.';
-        }
-        return true;
-    }
-    },
-];
+function promptManager() {
+  console.log('Please enter the following information for the team manager:');
+  inquirer
+      .prompt([
+          {
+              type: 'input',
+              message: 'Name:',
+              name: 'name',
+          },
+          {
+              type: 'input',
+              message: 'Employee ID:',
+              name: 'id',
+          },
+          {
+              type: 'input',
+              message: 'Email address:',
+              name: 'email',
+          },
+          {
+              type: 'input',
+              message: 'Office number:',
+              name: 'officeNumber',
+          },
+      ])
+      .then((answers) => {
+          const manager = {
+              name: answers.name,
+              id: answers.id,
+              email: answers.email,
+              officeNumber: answers.officeNumber,
+              role: 'Manager',
+          };
+          teamMembers.push(manager);
+          showMenu();
+      });
+}
 
+// Prompt user to select between adding an engineer or intern, or finishing the team
+function showMenu() {
+  console.log('');
+  console.log('What would you like to do next?');
+  inquirer
+      .prompt([
+          {
+              type: 'list',
+              message: 'Please select an option:',
+              name: 'menu',
+              choices: [
+                  'Add Engineer',
+                  'Add Intern',
+                  'Finish Building Team',
+              ],
+          },
+      ])
+      .then((answers) => {
+          switch (answers.menu) {
+              case 'Add Engineer':
+                  promptEngineer();
+                  break;
+              case 'Add Intern':
+                  promptIntern();
+                  break;
+              case 'Finish Building Team':
+                  generateHTML();
+                  break;
+              default:
+                  break;
+          }
+      });
+}
 
+// Prompt user for engineer info
+function promptEngineer() {
+  console.log('Please enter the following information for the engineer:');
+  inquirer
+      .prompt([
+          {
+              type: 'input',
+              message: 'Name:',
+              name: 'name',
+          },
+          {
+              type: 'input',
+              message: 'Employee ID:',
+              name: 'id',
+          },
+          {
+              type: 'input',
+              message: 'Email address:',
+              name: 'email',
+          },
+          {
+              type: 'input',
+              message: 'GitHub username:',
+              name: 'github',
+          },
+      ])
+      .then((answers) => {
+          const engineer = {
+              name: answers.name,
+              id: answers.id,
+              email: answers.email,
+              github: answers.github,
+              role: 'Engineer',
+          };
+          teamMembers.push(engineer);
+          showMenu();
+      });
+}
+
+// Prompt user for intern info
+function promptIntern() {
+  console.log('Please enter the following information for the intern:');
+  inquirer
+      .prompt([
+          {
+              type: 'input',
+              message: 'Name:',
+              name: 'name',
+          },
+          {
+              type: 'input',
+              message: 'Employee ID:',
+              name: 'id',
+          },
+          {
+              type: 'input',
+              message: 'Email address:',
+              name: 'email',
+          },
+          {
+              type: 'input',
+              message: 'School:',
+              name: 'school',
+          },
+      ])
+      .then((answers) => {
+          const intern = {
+              name: answers.name,
+              id: answers.id,
+              email: answers.email,
+              github: answers.github,
+              role: 'intern',
+          };
+          teamMembers.push(intern);
+          showMenu();
+      });
+}
+//promptManager()
 
 function writeToFile(file, data) {
   return fs.writeFileSync((process.cwd(), file), data);
@@ -298,11 +307,12 @@ function writeToFile(file, data) {
  // fs.writeFileSync('./output/teamRoster.html', html);
 //}
 
-function init() {
-    inquirer.prompt(managerQuestions, internQuestions, engineerQuestions).then((responses) => {
-    writeToFile('team.html', generateTeamRoster({ ...responses }));
-  });
+function init(responses) {
+    //then((responses) => {
+    writeToFile('team.html', generateHTML({ ...responses }));
+//});
 }
-init()
+promptManager()
 
-//cleargenerateTeamRoster()
+
+//cleargenerateTeamRoster()*/

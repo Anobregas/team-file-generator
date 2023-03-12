@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "handlebars": "^4.7.7",
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "open": "^8.4.2",
+    "util": "^0.12.5"
   }
 }
