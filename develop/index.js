@@ -213,6 +213,7 @@ function showMenu() {
           break;
         case 'Finish Building Team':
           generateHTML();
+          console.log(generateHTML())
           break;
         default:
           break;
@@ -318,8 +319,9 @@ function promptIntern() {
 // writeToFile('team.html', generateHTML({ ...responses }));
 //});
 //}
-async function getInfo() {
-  await promptManager()
+function getInfo() {
+  promptManager();
+  
 }
 
 
