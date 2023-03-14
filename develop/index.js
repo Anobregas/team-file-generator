@@ -181,7 +181,7 @@ function promptManager() {
           role: 'Manager',
       };*/
       const {name, id, email, officeNumber} = managerObject;
-      const manager = new Manager(name, id, email, officeNumber)
+      const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber)
       teamMembers.push(manager);
       showMenu();
     });
@@ -212,8 +212,9 @@ function showMenu() {
           promptIntern();
           break;
         case 'Finish Building Team':
-          generateHTML();
-          console.log(generateHTML())
+          console.log(teamMembers)
+          generateHTML(teamMembers);
+         console.log(generateHTML(teamMembers))
           break;
         default:
           break;
@@ -255,7 +256,7 @@ function promptEngineer() {
         role: 'Engineer',
       };*/
       const {name, id, email, officeNumber} = engineerObject;
-      const engineer = new Engineer(name, id, email, officeNumber)
+      const engineer = new Engineer(answers.name, answers.id, answers.email, answers.officeNumber)
       teamMembers.push(engineer);
       showMenu();
     });
@@ -296,33 +297,16 @@ function promptIntern() {
       };*/
 
       const {name, id, email, officeNumber} = internObject;
-      const intern = new Intern(name, id, email, officeNumber)
+      const intern = new Intern(answers.name, answers.id, answers.email, answers.officeNumber)
       teamMembers.push(intern);
       showMenu();
   });
 }
-//promptManager()
 
-//function writeToFile(file, data) {
-// return fs.writeFileSync((process.cwd(), file), data);
-//}
-
-//function generateTeamRoster(teamMembers) {
-// const source = fs.readFileSync('./templates/teamRoster.hbs', 'utf8');
-//const template = handlebars.compile(source);
-// const html = template({ teamMembers: teamMembers });
-// fs.writeFileSync('./output/teamRoster.html', html);
-//}
-
-//function init(responses) {
-//then((responses) => {
-// writeToFile('team.html', generateHTML({ ...responses }));
-//});
-//}
 function getInfo() {
-  promptManager();
-  
+  promptManager()
 }
+
 
 
 function finish() {
@@ -332,8 +316,8 @@ function finish() {
   writeFile(fileName, gerneratePage)
 }
 
-function writeFile(fileName, data) {
-  fs.writeFile(fileName, data, (err) => {
+function writeFile(fileName, gerneratePage) {
+  fs.writeFilesync(fileName, gerneratePage, (err) => {
     if(err){
     console.log(err)
     }else{
@@ -342,4 +326,3 @@ function writeFile(fileName, data) {
   })
 }
 getInfo()
-//cleargenerateTeamRoster()*/

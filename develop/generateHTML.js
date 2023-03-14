@@ -1,16 +1,17 @@
 
-function generateHTML() {
-    const teamMembers = []
+function generateHTML(teamMembers) {
+    console.log(teamMembers)
     const cards = teamMembers.map(member => {
+        console.log(member)
         const { name, role, id, email } = member;
 
         let specialInfo = '';
 
-        if (member instanceof Manager) {
-            specialInfo = `Office Number: ${member.getofficeNumber()}`;
-        } else if (member instanceof Engineer) {
+        if (member.getRole() === "Manager") {
+            specialInfo = `Office Number: ${member.getOfficeNumber()}`;
+        } else if (member.getRole() === "Engineer") {
             specialInfo = `GitHub: <a href="https://github.com/${member.getGithub()}" target="_blank">${member.getGithub()}</a>`;
-        } else if (member instanceof Intern) {
+        } else if (member.getRole() === "Intern") {
             specialInfo = `School: ${member.getSchool()}`;
         }
 
@@ -50,3 +51,20 @@ function generateHTML() {
     `;
 }
 module.exports = generateHTML
+
+/*
+const html = [];
+
+    html.push(team.filter(employee => employee.getRole() === "Manager")
+        .map(manager => generateManager(manager))
+    );
+    html.push(team
+        .filter(employee => employee.getRole() === "Engineer")
+        .map(engineer => generateEngineer(engineer))
+        .join("")
+    );
+    html.push(team
+        .filter(employee => employee.getRole() === "Intern")
+        .map(intern => generateIntern(intern))
+        .join("")
+    );*/
