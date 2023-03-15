@@ -212,9 +212,7 @@ function showMenu() {
           promptIntern();
           break;
         case 'Finish Building Team':
-          console.log(teamMembers)
           generateHTML(teamMembers);
-         console.log(generateHTML(teamMembers))
           break;
         default:
           break;
@@ -257,7 +255,7 @@ function promptEngineer() {
         role: 'Engineer',
       };*/
       const {name, id, email, officeNumber} = engineerObject;
-      const engineer = new Engineer(answers.name, answers.id, answers.email, answers.officeNumber)
+      const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github)
       teamMembers.push(engineer);
       showMenu();
     });
@@ -298,7 +296,7 @@ function promptIntern() {
       };*/
 
       const {name, id, email, officeNumber} = internObject;
-      const intern = new Intern(answers.name, answers.id, answers.email, answers.officeNumber)
+      const intern = new Intern(answers.name, answers.id, answers.email, answers.school)
       teamMembers.push(intern);
       showMenu();
   });

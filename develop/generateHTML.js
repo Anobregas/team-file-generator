@@ -3,16 +3,19 @@ function generateHTML(teamMembers) {
     console.log(teamMembers)
     const cards = teamMembers.map(member => {
         console.log(member)
-        const { name, role, id, email } = member;
+        const { name, id, email } = member;
 
         let specialInfo = '';
-
+        let role = ''
         if (member.getRole() === "Manager") {
             specialInfo = `Office Number: ${member.getOfficeNumber()}`;
+            role = "Manager"
         } else if (member.getRole() === "Engineer") {
             specialInfo = `GitHub: <a href="https://github.com/${member.getGithub()}" target="_blank">${member.getGithub()}</a>`;
+            role = "Engineer"
         } else if (member.getRole() === "Intern") {
             specialInfo = `School: ${member.getSchool()}`;
+            role = "Intern"
         }
 
         return `
@@ -38,6 +41,7 @@ function generateHTML(teamMembers) {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <link rel="stylesheet" href="./style.css">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         </head>
         <body>
           <header>
