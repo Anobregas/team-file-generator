@@ -327,3 +327,4 @@ function writeFile(fileName, gerneratePage) {
   })
 }
 getInfo()
+module.exports = promptManager
