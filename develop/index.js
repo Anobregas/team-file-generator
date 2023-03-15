@@ -219,6 +219,7 @@ function showMenu() {
         default:
           break;
       }
+      return finish()
     });
 }
 
@@ -317,7 +318,7 @@ function finish() {
 }
 
 function writeFile(fileName, gerneratePage) {
-  fs.writeFilesync(fileName, gerneratePage, (err) => {
+  fs.writeFileSync(fileName, gerneratePage, (err) => {
     if(err){
     console.log(err)
     }else{
