@@ -1,8 +1,7 @@
 
 function generateHTML(teamMembers) {
-    console.log(teamMembers)
+
     const cards = teamMembers.map(member => {
-        console.log(member)
         const { name, id, email } = member;
 
         let specialInfo = '';
@@ -56,19 +55,3 @@ function generateHTML(teamMembers) {
 }
 module.exports = generateHTML
 
-/*
-const html = [];
-
-    html.push(team.filter(employee => employee.getRole() === "Manager")
-        .map(manager => generateManager(manager))
-    );
-    html.push(team
-        .filter(employee => employee.getRole() === "Engineer")
-        .map(engineer => generateEngineer(engineer))
-        .join("")
-    );
-    html.push(team
-        .filter(employee => employee.getRole() === "Intern")
-        .map(intern => generateIntern(intern))
-        .join("")
-    );*/
